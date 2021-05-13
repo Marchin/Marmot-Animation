@@ -1,0 +1,72 @@
+version(1);
+
+project_name = "GraphicsEngine";
+
+patterns = {
+	"*.cpp",
+	"*.h",
+	"*.bat",
+};
+
+patterns = {
+	".*"
+};
+
+load_paths = {
+	{{
+		{"..\\test_game\\.", .relative = true, .recursive = true,},
+		{"..\\engine\\.", .relative = true, .recursive = true,}
+	}, .os ="win"},
+};
+
+command_list = {
+  { .name = "build",
+	.out = "*compilation*",
+	.footer_panel = true,
+	.save_dirty_files = true,
+	.cursor_at_end = true,
+	.cmd = {{"..\\misc\\build.bat", .os = "win"},},
+  },
+  { .name = "run",
+	.out = "*run*",
+	.footer_panel = true,
+	.save_dirty_files = false,
+	.cursor_at_end = true,
+	.cmd = {{"..\\build\\main", .os = "win"},},
+  },
+  { .name = "console",
+	.out = "*compilation*",
+	.footer_panel = false,
+	.save_dirty_files = true,
+	.cursor_at_end = false,
+	.cmd = {{"cmd", .os = "win"},},
+  },
+  { .name = "vs",
+	.out = "",
+	.footer_panel = false,
+	.save_dirty_files = true,
+	.cursor_at_end = false,
+	.cmd = {{"devenv ..\\build\\main.exe", .os = "win"},},
+  },
+  { .name = "vscode",
+	.out = "",
+	.footer_panel = false,
+	.save_dirty_files = true,
+	.cursor_at_end = false,
+	.cmd = {{"code", .os = "win"},},
+  },
+  { .name = "remedybg",
+	.out = "",
+	.footer_panel = false,
+	.save_dirty_files = true,
+	.cursor_at_end = false,
+	.cmd = {{"..\\session.rdbg", .os = "win"},},
+  },
+};
+
+fkey_command[3] = "console";
+fkey_command[4] = "build";
+fkey_command[5] = "run";
+fkey_command[7] = "remedybg";
+fkey_command[10] = "vs";
+fkey_command[11] = "vscode";
