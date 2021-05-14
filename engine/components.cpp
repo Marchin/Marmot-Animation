@@ -10,38 +10,6 @@ internal Component*
 createComponent(ComponentID componentID) {
     Component* result = {};
     switch (componentID) {
-        case TRIANGLE: {
-            result = (Component*)malloc(sizeof(Triangle));
-            memset(result, 0, sizeof(Triangle));
-        } break;
-        case COLOR_SQUARE: {
-            result = (Component*)malloc(sizeof(ColorSquare));
-            memset(result, 0, sizeof(ColorSquare));
-        } break;
-        case CIRCLE: {
-            result = (Component*)malloc(sizeof(Circle));
-            memset(result, 0, sizeof(Circle));
-        } break;
-        case SPRITE_RENDERER: {
-            result = (Component*)malloc(sizeof(SpriteRenderer));
-            memset(result, 0, sizeof(SpriteRenderer));
-        } break;
-        case SPRITE_SHEET: {
-            result = (Component*)malloc(sizeof(SpriteSheet));
-            memset(result, 0, sizeof(SpriteSheet));
-        } break;
-        case ANIMATION: {
-            result = (Component*)malloc(sizeof(Animation));
-            memset(result, 0, sizeof(Animation));
-        } break;
-        case MODEL: {
-            result = (Component*)malloc(sizeof(Model));
-            memset(result, 0, sizeof(Model));
-        } break;
-        case HYPER_CUBE: {
-            result = (Component*)malloc(sizeof(HyperCube));
-            memset(result, 0, sizeof(HyperCube));
-        } break;
         case NONE: {
             result = (Component*)malloc(sizeof(Node));
             memset(result, 0, sizeof(Node));

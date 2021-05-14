@@ -69,8 +69,6 @@ global const hmm_vec3 VEC3_X = HMM_Vec3(1.f, 0.f, 0.f);
 global const hmm_vec3 VEC3_Y = HMM_Vec3(0.f, 1.f, 0.f);
 global const hmm_vec3 VEC3_Z = HMM_Vec3(0.f, 0.f, 1.f);
 
-global MeshComponentsPool* gpMeshComponentsPool;
-
 struct Level {
     Plane* pBSPPlanes;
     u32 bspPlaneCount;
