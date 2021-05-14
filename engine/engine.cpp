@@ -1,7 +1,5 @@
 #include "engine.h"
 
-//#include "kiss_fft/kiss_fft.c"
-
 #include "rotor.cpp"
 #if OPENGL
 #include "opengl_renderer.cpp"
@@ -13,10 +11,6 @@
 
 ENGINE_API void
 startEngine(Window* pWindow, Renderer* pRenderer, Camera* pCamera) {
-    gpMeshComponentsPool = (MeshComponentsPool*)malloc(sizeof(MeshComponentsPool));
-    assert(gpMeshComponentsPool);
-    memset(gpMeshComponentsPool, 0, sizeof(MeshComponentsPool));
-    
     startWindow(pWindow);
     startRenderer(pRenderer, pWindow, pCamera);
 }

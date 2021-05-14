@@ -54,8 +54,8 @@ inline u32 reverseBits(u32 value, u32 maxValue = 0) {
 }
 
 struct ENGINE_API Plane {
-    hmm_vec3 normal;
-    hmm_vec3 dot;
+    V3 normal;
+    V3 dot;
     f32 d; // ax + by + cz + d
 };
 
