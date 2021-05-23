@@ -21,18 +21,18 @@ struct ModelData {
     Face* pFaces;
     u32 facesCount;
     
+    u64 pad;
+    meow_hash idHash;
+    
     u32 va;
     u32 vb;
     
-    Texture texture;
-    
     Shader shader;
-    meow_hash idHash;
-    //Transform transform;
 };
 
 struct Node {
     ModelData* pModel;
+    Texture* pTexture;
     Transform transform;
 };
 
@@ -41,9 +41,11 @@ struct ModelStructure {
     
     Node* pNodes;
     ModelData* pModels;
+    Texture* pTextures;
     
     u32 nodeCount;
     u32 modelCount;
+    u32 textureCount;
     
     Transform transform;
 };
@@ -55,7 +57,7 @@ ENGINE_API void
 initParsedModel(ModelData* pModelData);
 
 ENGINE_API b32
-drawParsedModel(void* pModelData, Renderer* pRenderer);
+drawParsedModel(ModelData* pModelData, Renderer* pRenderer, Texture* pTexture);
 
 #define MODELS_PARSER_H
 #endif //MODELS_PARSER_H

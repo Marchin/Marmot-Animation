@@ -32,7 +32,7 @@ command_list = {
 	.footer_panel = true,
 	.save_dirty_files = false,
 	.cursor_at_end = true,
-	.cmd = {{"..\\build\\main", .os = "win"},},
+	.cmd = {{"..\\misc\\run.bat", .os = "win"},},
   },
   { .name = "console",
 	.out = "*compilation*",

@@ -91,11 +91,8 @@ initParsedModel(ModelData* pModelData) {
     initShader(&pModelData->shader, "Texture", "..//resources//shaders//vModel.glsl", 
                "..//resources//shaders//fModel.glsl");
     
-    initTexture(&pModelData->texture, "..//resources//dice.jpg", true);
-    
     initVA(&pModelData->va);
     vaBind(pModelData->va);
-    
     
 #if 0
     pModelData->transform.pEntity = pModelData;
@@ -133,12 +130,13 @@ initParsedModel(ModelData* pModelData) {
 }
 
 b32
-drawParsedModel(void* pData, Renderer* pRenderer) {
-    ModelData* pModelData = (ModelData*)pData;
+drawParsedModel(ModelData* pModelData, Renderer* pRenderer, Texture* pTexture) {
     shaderBindID(pModelData->shader.id);
     Mat4 mvp = getModelViewProj(pRenderer);
     shaderSetMat4(&pModelData->shader, "uModelViewProjection", &mvp);
-    textureBindID(pModelData->texture.id, 0);
+    if (pTexture) {
+        textureBindID(pTexture->id, 0);
+    }
     shaderSetInt(&pModelData->shader, "texture_diffuse1", 0);
     vaBind(pModelData->va);
     drawBuffer(0, pModelData->facesCount*3);
