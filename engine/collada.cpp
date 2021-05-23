@@ -13,11 +13,6 @@ const char imageIDTag[] = "<image id";
 const char effectIDTag[] = "<effect id";
 const char initFromTag[] = "<init_from";
 const char materialTag[] = "<material";
-#if 0
-const char scaleTag[] = "<scale";
-const char rotationTag[] = "<rotate";
-const char translateTag[] = "<translate";
-#endif
 
 struct MaterialParserHelper {
     meow_hash materialHash;
@@ -163,21 +158,6 @@ parseCollada(ModelStructure* pModelStructure, char* path) {
                         modelData.pVertices[iVertex] = vertex;
                     }
                     
-#if 0
-                    // TODO(Marchin): wtf was this for?
-                    ptr = readLineAndSkipWhitespace(buffer, kBufferSize, pFile);
-                    while (strncmp(ptr, accessorSourceTag, strlen(accessorSourceTag)) != 0) {
-                        ptr = seekString("id=\"", ptr);
-                        char* idStart = ptr;
-                        ptr = readLineAndSkipWhitespace(buffer, kBufferSize, pFile);
-                    }
-                    
-                    const char strideText[] = "stride";
-                    ptr = seekString(&strideText[0], ptr);
-                    ptr += strlen(strideText) + 2 /* =" */;
-                    assert(atoi(ptr) == 3);
-#endif
-                    
                     SEEK_LINE_STARTING_WITH(floatArrayTag);
                     ptr = seekString(&countText[0], ptr);
                     ptr += strlen(countText) + 2 /* =" */;
@@ -261,38 +241,6 @@ parseCollada(ModelStructure* pModelStructure, char* path) {
                 
                 strncpy(pNode->transform.name, name, ptr - name);
                 
-#if 0
-                
-                SEEK_LINE_STARTING_WITH(scaleTag);
-                ptr = seekCharacter('>', ptr) + 1;
-                for (u32 i = 0; i < 3; ++i) {
-                    pNode->transform.scale.Elements[i] = (f32)atof(ptr);
-                    ptr = seekNextString(ptr);
-                }
-                
-                V3 eulerAngles = {};
-                SEEK_LINE_STARTING_WITH(rotationTag);
-                for (u32 i = 0; i < 3; ++i) {
-                    ptr = seekCharacter('>', ptr) + 1;
-                    ptr = seekNextString(ptr);
-                    ptr = seekNextString(ptr);
-                    ptr = seekNextString(ptr);
-                    eulerAngles.Elements[2 - i] = (f32)atof(ptr);
-                    ptr = readLineAndSkipWhitespace(buffer, kBufferSize, pFile);
-                }
-                Rotor3 rotorZ = rotorFromAngleAndAxis(eulerAngles.z, VEC3_Z);
-                Rotor3 rotorY = rotorFromAngleAndAxis(eulerAngles.y, VEC3_Y);
-                Rotor3 rotorX = rotorFromAngleAndAxis(eulerAngles.x, VEC3_X);
-                //pNode->transform.rotor = rotorX*rotorY*rotorZ;
-                pNode->transform.rotor = rotorZ*rotorY*rotorX;
-                
-                SEEK_LINE_STARTING_WITH(translateTag);
-                ptr = seekCharacter('>', ptr) + 1;
-                for (u32 i = 0; i < 3; ++i) {
-                    pNode->transform.position.Elements[i] = (f32)atof(ptr);
-                    ptr = seekNextString(ptr);
-                }
-#else
                 SEEK_LINE_STARTING_WITH(matrixTag);
                 
                 Mat4 transformMatrix;
@@ -335,7 +283,7 @@ parseCollada(ModelStructure* pModelStructure, char* path) {
                 transformMatrix.Elements[2][0] /= pNode->transform.scale.x;
                 
                 pNode->transform.rotor = getRotorFromMat4(transformMatrix);
-#endif
+                
                 pNode->transform.pEntity = pNode;
                 pNode->transform.draw = drawNode;
                 addChild(&pNode->transform, pCurrParent);
@@ -423,19 +371,3 @@ parseCollada(ModelStructure* pModelStructure, char* path) {
         fclose(pFile);
     }
 }
-/*
-pNode->transform.position.x = transformMatrix.Elements[0][3];
-                pNode->transform.position.y = transformMatrix.Elements[1][3];
-                pNode->transform.position.z = transformMatrix.Elements[2][3];
-                pNode->transform.scale.x = HMM_LengthVec3(HMM_Vec3(transformMatrix.Elements[0][0],
-                                                                   transformMatrix.Elements[1][0],
-                                                                   transformMatrix.Elements[2][0]));
-                pNode->transform.scale.y = HMM_LengthVec3(HMM_Vec3(transformMatrix.Elements[0][1],
-                                                                   transformMatrix.Elements[1][1],
-                                                                   transformMatrix.Elements[2][1]));
-                pNode->transform.scale.z = HMM_LengthVec3(HMM_Vec3(transformMatrix.Elements[0][2],
-                                                                   transformMatrix.Elements[1][2],
-                                                                   transformMatrix.Elements[2][2]));
-                pNode->transform.rotor = getRotorFromMat4(transformMatrix);
-                
-*/
